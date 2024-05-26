@@ -26,6 +26,8 @@ public class Main {
         window.pack();
         window.setVisible(true);
 
+        // This code will be used to add animation
+
     }
 }
 
