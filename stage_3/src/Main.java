@@ -1,8 +1,10 @@
 package stage_3.src;
 
 import java.awt.Dimension;
-
 import javax.swing.*;
+import stage_3.src.Level.DifficultLevel;
+import stage_3.src.Level.IntermediateLevel;
+import stage_3.src.Level.EasyLevel;
 
 public class Main {
 
@@ -14,6 +16,9 @@ public class Main {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(800, 600);
         frame.setVisible(true);
+
+        DifficultLevel difficultLevel = new DifficultLevel();
+        EasyLevel EasyLevel = new EasyLevel();
 
     }
 

@@ -127,44 +127,59 @@ public class Logic {
     }
 
     public boolean match_checker() {
-
+        boolean matchFound = false; // Flag to indicate if a match is found
         for (int i = 0; i < candies_width; i++) {
             for (int j = 0; j < candies_height; j++) {
 
                 if (j < candies_height - 2 && candies[i][j].getCandyType() == candies[i][j + 1].getCandyType()
                         && candies[i][j].getCandyType() == candies[i][j + 2].getCandyType()) {
-                    return true;
+                    matchFound = true; // A match is found
+                    removeObstaclesNear(i, j);
+                    // return true;
                 } else if (i < candies_width - 2 && candies[i][j].getCandyType() == candies[i + 1][j].getCandyType()
                         && candies[i][j].getCandyType() == candies[i + 2][j].getCandyType()) {
-                    return true;
+                    // return true;
+                    matchFound = true; // A match is found
+                    removeObstaclesNear(i, j); // Call the method to remove obstacles near the match
                 }
             }
         }
 
-        return false;
+        // return false;
+        return matchFound;
     }
     // After finding a match, check for obstacles
 
-    private boolean nextMatchFound() {
-        if (match_checker()) {
-            for (Point obstacle : obstacles) {
-                if (isNearMatch(obstacle.getPosition())) {
-                    obstacle.setActive(false);
-                }
-            }
-        }
-        return false;
-    }
+    // private boolean nextMatchFound() {
+    // if (match_checker()) {
+    // for (Point obstacle : obstacles) {
+    // if (isNearMatch(obstacle.getPosition())) {
+    // obstacle.setActive(false);
+    // }
+    // }
+    // }
+    // return false;
+    // }
 
+    // private void removeObstaclesNear(int i, int j) {
+    // Iterator<Obstacle> iterator = obstacles.iterator();
+    // while (iterator.hasNext()) {
+    // Obstacle obstacle = iterator.next();
+    // if (obstacle.isActive() && isAdjacent(obstacle.getPosition(), i, j)) {
+    // obstacle.setActive(false);
+    // iterator.remove(); // Remove the obstacle if it's no longer active
+    // }
+    // }
+
+    // }
     private void removeObstaclesNear(int i, int j) {
-        Iterator<Obstacle> iterator = obstacles.iterator();
-        while (iterator.hasNext()) {
-            Obstacle obstacle = iterator.next();
-            if (obstacle.isActive() && isAdjacent(obstacle.getPosition(), i, j)) {
-                obstacle.setActive(false);
-                iterator.remove(); // Remove the obstacle if it's no longer active
+        List<Point> toRemove = new ArrayList<>();
+        for (Point obstacle : obstacles) {
+            if (isAdjacent(obstacle, i, j)) {
+                toRemove.add(obstacle);
             }
         }
+        obstacles.removeAll(toRemove);
     }
 
     public void ResetCandies() {
@@ -208,10 +223,7 @@ public class Logic {
         // Draw obstacles
         for (Point obstacle : obstacles) {
             // Resize the obstacle image to 50x50 pixels
-            // Image resizedObstacle = obstacleImage.getScaledInstance(50, 50,
-            // Image.SCALE_SMOOTH);
-            // // Draw the resized obstacle image at the obstacle's position
-            // g.drawImage(resizedObstacle, obstacle.x, obstacle.y, null);
+
             g.drawImage(obstacleImage, obstacle.x * 50 + 325, obstacle.y * 50 + 150, 50,
                     50, null);
         }
@@ -723,13 +735,18 @@ public class Logic {
         return false;
     }
 
-    private boolean isAdjacent(Point obstaclePosition, int i, int j) {
-        // Determine if the obstacle is adjacent to the given cell (i, j)
-        int x = obstaclePosition.x;
-        int y = obstaclePosition.y;
+    // private boolean isAdjacent(Point obstaclePosition, int i, int j) {
+    // // Determine if the obstacle is adjacent to the given cell (i, j)
+    // int x = obstaclePosition.x;
+    // int y = obstaclePosition.y;
 
-        // Check if the obstacle is in one of the eight surrounding cells
-        return (x >= i - 1 && x <= i + 1) && (y >= j - 1 && y <= j + 1);
+    // // Check if the obstacle is in one of the eight surrounding cells
+    // return (x >= i - 1 && x <= i + 1) && (y >= j - 1 && y <= j + 1);
+    // }
+    private boolean isAdjacent(Point obstacle, int i, int j) {
+        int dx = Math.abs(obstacle.x - i);
+        int dy = Math.abs(obstacle.y - j);
+        return (dx + dy == 1); // adjacent if only one step away
     }
 
     public void Move() {
