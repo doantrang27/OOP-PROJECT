@@ -4,7 +4,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
-public class IntermediateLevel implements IDifficultyAdjustment {
+public class IntermediateLevel extends EasyLevel implements IDifficultyAdjustment {
 
     private boolean isAdjacent(Point obstacle, Point curPos) {
         return Math.abs(obstacle.x - curPos.x) + Math.abs(obstacle.y - curPos.y) == 1;

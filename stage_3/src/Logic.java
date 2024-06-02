@@ -5,6 +5,7 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 import java.util.List;
 import javax.swing.ImageIcon;
@@ -15,9 +16,9 @@ import stage_3.src.Level.DifficultLevel;
 import stage_3.src.Level.EasyLevel;
 import stage_3.src.Level.IntermediateLevel;
 
-public class Logic {
+public abstract class Logic {
     private final Board board;
-    private final int candies_width, candies_height;
+    protected final int candies_width, candies_height;
     private final Candies[][] candies;
     private final Candies[][] Replacement_candies;
     private final Random random = new Random();
@@ -36,7 +37,7 @@ public class Logic {
     private boolean swapping = false;
     private boolean Non_matching_swap = false;
     private Font Candy_font;
-    private int Score;
+    protected int Score;
     private int Moves_count;
     private int game_ended_index = -5;
     private int game_out_of_moves_index = -6;
@@ -45,10 +46,11 @@ public class Logic {
     private final Image endGame = new ImageIcon(/* ảnh end */).getImage();
     private final Image Dispenser = new ImageIcon("Textures/Dispenser.png").getImage();
     private final Image obstacleImage = new ImageIcon("Candy_Crush/res/ice.png").getImage();
-    private List<Point> obstacles = new ArrayList<>();
+    protected List<Point> obstacles = new ArrayList<>();
+    IDifficultyAdjustment difficultyAdjusment;
 
-    public Logic(int candies_width, int candies_height, int moves_count, int AmountOfCandies, String gameDifficulty) {
-        this.setGameDifficulty(gameDifficulty);
+    public Logic(int candies_width, int candies_height, int moves_count, int AmountOfCandies) {
+        // this.setGameDifficulty(gameDifficulty);
         this.Moves_count = moves_count;
         this.AmountOfCandies = AmountOfCandies;
         this.candies_width = candies_width;
@@ -68,8 +70,9 @@ public class Logic {
         } catch (IOException | FontFormatException exp) {
         }
 
-        // placeObstaclesRandomly();
-        this.gameLevel.placeObstaclesRandomly(candies_width, candies_height, obstacles);
+        placeObstaclesRandomly();
+        // this.difficultyAdjusment.placeObstaclesRandomly(candies_width,
+        // candies_height, obstacles);
 
         for (int i = 0; i < candies_width; i++) {
             for (int j = 0; j < candies_height; j++) {
@@ -141,8 +144,8 @@ public class Logic {
                 if (j < candies_height - 2 && candies[i][j].getCandyType() == candies[i][j + 1].getCandyType()
                         && candies[i][j].getCandyType() == candies[i][j + 2].getCandyType()) {
                     matchFound = true; // A match is found
-                    // removeObstaclesNear(i, j);
-                    this.gameLevel.removeObstaclesNear(new Point(i, j), obstacles);
+                    removeObstaclesNear(i, j);
+                    // this.difficultyAdjusment.removeObstaclesNear(new Point(i, j), obstacles);
                     // return true;
                 } else if (i < candies_width - 2 && candies[i][j].getCandyType() == candies[i + 1][j].getCandyType()
                         && candies[i][j].getCandyType() == candies[i + 2][j].getCandyType()) {
@@ -150,7 +153,7 @@ public class Logic {
                     matchFound = true; // A match is found
                     // removeObstaclesNear(i, j); // Call the method to remove obstacles near the
                     // match
-                    this.gameLevel.removeObstaclesNear(new Point(i, j), obstacles);
+                    removeObstaclesNear(i, j);
 
                 }
             }
@@ -184,44 +187,18 @@ public class Logic {
 
     // }
 
-    IDifficultyAdjustment gameLevel;
-
-    public void setGameDifficulty(String difficulty) {
-        if (difficulty.equals("EASY")) {
-            gameLevel = new EasyLevel();
-        } else if (difficulty.equals("MEDIUM")) {
-            gameLevel = new IntermediateLevel();
-        } else {
-            gameLevel = new EasyLevel();
-        }
-    }
+    // public void setGameDifficulty(String difficulty) {
+    // if (difficulty.equals("EASY")) {
+    // difficultyAdjusment = new EasyLevel();
+    // } else if (difficulty.equals("MEDIUM")) {
+    // difficultyAdjusment = new IntermediateLevel();
+    // } else {
+    // difficultyAdjusment = new EasyLevel();
+    // }
+    // }
 
     // DifficultLevel level = DifficultLevel.EASY;
-
-    // private void removeObstaclesNear(int i, int j) {
-    // switch (level) {
-    // case EASY:
-    // break;
-    // case HARD:
-    // break;
-    // case LEGENDARY:
-    // break;
-    // case MEDIUM:
-
-    // List<Point> toRemove = new ArrayList<>();
-    // for (Point obstacle : obstacles) {
-    // if (isAdjacent(obstacle, i, j)) {
-    // toRemove.add(obstacle);
-    // }
-    // }
-    // obstacles.removeAll(toRemove);
-
-    // break;
-    // default:
-    // break;
-
-    // }
-    // }
+    abstract void removeObstaclesNear(int i, int j);
 
     public void ResetCandies() {
         while (!noMatchingCandies()) {
@@ -706,7 +683,7 @@ public class Logic {
         }
         // removeObstaclesNear(i, j);
 
-        gameLevel.removeObstaclesNear(new Point(i, j), this.obstacles);
+        difficultyAdjusment.removeObstaclesNear(new Point(i, j), this.obstacles);
 
     }
 
@@ -732,15 +709,7 @@ public class Logic {
         }
     }
 
-    private void placeObstaclesRandomly() {
-        for (int i = 0; i < candies_width; i++) {
-            for (int j = 0; j < candies_height; j++) {
-                if (Math.random() < 0.1) { // 10% chance to place an obstacle
-                    obstacles.add(new Point(i, j));
-                }
-            }
-        }
-    }
+    abstract void placeObstaclesRandomly();
 
     private boolean isNearMatch(Point obstaclePosition) {
         // Check the surrounding cells of the obstacle for matches
@@ -786,7 +755,7 @@ public class Logic {
     // // Check if the obstacle is in one of the eight surrounding cells
     // return (x >= i - 1 && x <= i + 1) && (y >= j - 1 && y <= j + 1);
     // }
-    private boolean isAdjacent(Point obstacle, int i, int j) {
+    protected boolean isAdjacent(Point obstacle, int i, int j) {
         int dx = Math.abs(obstacle.x - i);
         int dy = Math.abs(obstacle.y - j);
         return (dx + dy == 1); // adjacent if only one step away

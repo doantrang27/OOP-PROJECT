@@ -2,6 +2,9 @@ package stage_3.src;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+
+import stage_3.src.Level.EasyLevel;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,7 +25,14 @@ public class GamePanel extends JPanel {
     Graphics graphics;
 
     GamePanel() {
-        gameLogic = new Logic(7, 7, 15, 5, "EASY");
+        String difficulty = "EASY";
+        if (difficulty.equals("EASY")) {
+            System.out.println("User selected difficuty: EASY");
+            gameLogic = new LogicEasy(7, 7, 15, 5);
+        } else {
+            System.out.println("User selected difficuty: MEDIUM");
+            gameLogic = new LogicMedium(7, 7, 16, 5);
+        }
 
         int delay = 1000 / 100;
         timer = new Timer(delay, e -> {
