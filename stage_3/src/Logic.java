@@ -10,6 +10,11 @@ import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.text.html.HTMLDocument.Iterator;
 
+import stage_3.src.Level.IDifficultyAdjustment;
+import stage_3.src.Level.DifficultLevel;
+import stage_3.src.Level.EasyLevel;
+import stage_3.src.Level.IntermediateLevel;
+
 public class Logic {
     private final Board board;
     private final int candies_width, candies_height;
@@ -42,8 +47,8 @@ public class Logic {
     private final Image obstacleImage = new ImageIcon("Candy_Crush/res/ice.png").getImage();
     private List<Point> obstacles = new ArrayList<>();
 
-    public Logic(int candies_width, int candies_height, int moves_count, int AmountOfCandies) {
-
+    public Logic(int candies_width, int candies_height, int moves_count, int AmountOfCandies, String gameDifficulty) {
+        this.setGameDifficulty(gameDifficulty);
         this.Moves_count = moves_count;
         this.AmountOfCandies = AmountOfCandies;
         this.candies_width = candies_width;
@@ -57,12 +62,14 @@ public class Logic {
         board = new Board(candies_height, candies_width);
 
         try {
-            Candy_font = Font.createFont(Font.TRUETYPE_FONT, new File("Textures\\CANDY.TTF")).deriveFont(30f);
+            Candy_font = Font.createFont(Font.TRUETYPE_FONT, new File("Textures/CANDY.TTF")).deriveFont(30f);
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("Textures\\CANDY.TTF")));
+            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("Textures/CANDY.TTF")));
         } catch (IOException | FontFormatException exp) {
         }
-        placeObstaclesRandomly();
+
+        // placeObstaclesRandomly();
+        this.gameLevel.placeObstaclesRandomly(candies_width, candies_height, obstacles);
 
         for (int i = 0; i < candies_width; i++) {
             for (int j = 0; j < candies_height; j++) {
@@ -134,13 +141,17 @@ public class Logic {
                 if (j < candies_height - 2 && candies[i][j].getCandyType() == candies[i][j + 1].getCandyType()
                         && candies[i][j].getCandyType() == candies[i][j + 2].getCandyType()) {
                     matchFound = true; // A match is found
-                    removeObstaclesNear(i, j);
+                    // removeObstaclesNear(i, j);
+                    this.gameLevel.removeObstaclesNear(new Point(i, j), obstacles);
                     // return true;
                 } else if (i < candies_width - 2 && candies[i][j].getCandyType() == candies[i + 1][j].getCandyType()
                         && candies[i][j].getCandyType() == candies[i + 2][j].getCandyType()) {
                     // return true;
                     matchFound = true; // A match is found
-                    removeObstaclesNear(i, j); // Call the method to remove obstacles near the match
+                    // removeObstaclesNear(i, j); // Call the method to remove obstacles near the
+                    // match
+                    this.gameLevel.removeObstaclesNear(new Point(i, j), obstacles);
+
                 }
             }
         }
@@ -172,15 +183,45 @@ public class Logic {
     // }
 
     // }
-    private void removeObstaclesNear(int i, int j) {
-        List<Point> toRemove = new ArrayList<>();
-        for (Point obstacle : obstacles) {
-            if (isAdjacent(obstacle, i, j)) {
-                toRemove.add(obstacle);
-            }
+
+    IDifficultyAdjustment gameLevel;
+
+    public void setGameDifficulty(String difficulty) {
+        if (difficulty.equals("EASY")) {
+            gameLevel = new EasyLevel();
+        } else if (difficulty.equals("MEDIUM")) {
+            gameLevel = new IntermediateLevel();
+        } else {
+            gameLevel = new EasyLevel();
         }
-        obstacles.removeAll(toRemove);
     }
+
+    // DifficultLevel level = DifficultLevel.EASY;
+
+    // private void removeObstaclesNear(int i, int j) {
+    // switch (level) {
+    // case EASY:
+    // break;
+    // case HARD:
+    // break;
+    // case LEGENDARY:
+    // break;
+    // case MEDIUM:
+
+    // List<Point> toRemove = new ArrayList<>();
+    // for (Point obstacle : obstacles) {
+    // if (isAdjacent(obstacle, i, j)) {
+    // toRemove.add(obstacle);
+    // }
+    // }
+    // obstacles.removeAll(toRemove);
+
+    // break;
+    // default:
+    // break;
+
+    // }
+    // }
 
     public void ResetCandies() {
         while (!noMatchingCandies()) {
@@ -663,7 +704,9 @@ public class Logic {
             }
             System.out.println("outOfBounds1");
         }
-        removeObstaclesNear(i, j);
+        // removeObstaclesNear(i, j);
+
+        gameLevel.removeObstaclesNear(new Point(i, j), this.obstacles);
 
     }
 

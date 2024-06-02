@@ -22,7 +22,8 @@ public class GamePanel extends JPanel {
     Graphics graphics;
 
     GamePanel() {
-        gameLogic = new Logic(7, 7, 15, 5);
+        gameLogic = new Logic(7, 7, 15, 5, "EASY");
+
         int delay = 1000 / 100;
         timer = new Timer(delay, e -> {
             gameLogic.Break_detector();

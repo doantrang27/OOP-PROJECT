@@ -1,7 +1,16 @@
-package stage_3.src;
+package stage_3.src; //
 
-import javax.swing.*;
+// class SpecialCandy
+// class ExplosibleCandy
+// class RegularCandy
+// class RandomCandy
+
+// candy_crush.candy
+
+// import candy_crush.candy.RandomCandy
+
 import java.awt.*;
+import javax.swing.*;
 
 public class Board {
     ImageIcon[] board = new ImageIcon[2];
@@ -29,7 +38,6 @@ public class Board {
                         g.drawImage(board[0].getImage(), 50 * i + 325, 50 * j + 150, null);
                     else
                         g.drawImage(board[1].getImage(), 50 * i + 325, 50 * j + 150, null);
-
                 }
             }
         }
