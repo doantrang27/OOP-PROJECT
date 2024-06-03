@@ -22,7 +22,7 @@ public class Instruction extends GameState {
         this.gsm = gsm;
         init();
         try {
-            bgInstruction = new Background("/Background/bg5.jpeg", 0);
+            bgInstruction = new Background("/Background/BgInstruction.jpg", 0);
             tilecolor = new Color(255, 130, 171);
             tilefont = new Font("Phosphate", Font.PLAIN, 40);
             font = new Font("Bradley Hand", Font.PLAIN, 20);
@@ -49,14 +49,14 @@ public class Instruction extends GameState {
         //draw title
         g.setColor(tilecolor);
         g.setFont(tilefont);
-        g.drawString("Instruction", 93, 50);
+//        g.drawString("Instruction", 143, 50);
 
         //draw instruction
         g.setFont(font);
         g.setColor(Color.white);
-        g.drawString(instruction[0], 60, 160);
-        g.drawString(instruction[1], 60, 180);
-        g.drawString(instruction[2], 60, 200);
+//        g.drawString(instruction[0], 150, 160);
+//        g.drawString(instruction[1], 150, 180);
+//        g.drawString(instruction[2], 150, 200);
     }
 
     @Override

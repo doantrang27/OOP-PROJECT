@@ -1,74 +1,86 @@
+
 package GameStates;
 
+import GameStates.GameState;
+import GameStates.GameStateManager;
+import Main.GamePanel;
 import TileMap.Background;
-
+import UI.MenuButton;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 
 public class MenuState extends GameState {
-    private Background bg;
 
+    private Background bg;
     private int currentChoice = 0;
-    private String [] options = {
-            "Start",
-            "Help",
-            "Quit"
-    };
+    private BufferedImage holder, title;
+
+    private MenuButton[] buttons = new MenuButton[3];
+    private final String[] options = {"Start", "Option", "Quit"};
 
     private Color titleColor;
-    private Font titleFont;
+    public Font titleFont;
 
     private Font font;
+    //    private AudioPlayer audioInput;
 
-    public MenuState (GameStateManager gsm) {
+    public MenuState(GameStateManager gsm) {
         this.gsm = gsm;
+
         try {
-            bg = new Background ("/res/Background.jpg", 0);
-            bg.setVector(1, 1);
+            bg = new Background("/Background/BgMenu.jpeg", 0.5);
+            bg.setVector(0, 0);
             titleColor = new Color(255, 130, 171);
             titleFont = new Font("Phosphate", Font.PLAIN, 40);
             font = new Font("Bradley Hand", Font.PLAIN, 20);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
+
+        loadButtons();
     }
-    public void init () {}
-    public void update () {
+
+    public void init() {}
+
+    private void loadButtons() {
+        buttons[0] = new MenuButton(GamePanel.WIDTH / 2 - 15, 170 + 0 * 30, 0);
+        buttons[1] = new MenuButton(GamePanel.WIDTH / 2 - 15, 170 + 1 * 30, 1);
+        buttons[2] = new MenuButton(GamePanel.WIDTH / 2 - 15, 170 + 2 * 30, 2);
+    }
+
+    public void update() {
+        // draw bg
         bg.update();
+        for (MenuButton mb : buttons) mb.update(currentChoice);
     }
-    public void draw (Graphics2D g) {
-        //draw background
+
+    public void draw(Graphics2D g) {
         bg.draw(g);
+        g.drawImage(title, 50, 20, 225, 56, null);
+        g.drawImage(holder, 116, 125, 90, 100, null);
 
-        //draw title
-        g.setColor(titleColor);
-        g.setFont(titleFont);
-        g.drawString("Candy Crush", 676/2, 390/2);
+        // draw title
 
-        //draw menu options
-        g.setFont(font);
-        for (int i = 0; i < options.length; i++) {
-            if (i == currentChoice) {
-                g.setColor(Color.red);
-            }
-            else g.setColor(Color.black);
-                g.drawString(options[i], 190, 160 + i * 20);
-        }
+        for (MenuButton mb : buttons) mb.draw(g);
     }
 
-    private void select () {
+    private void select() {
+
         if (currentChoice == 0) {
             gsm.setState(GameStateManager.LEVEL);
         }
         if (currentChoice == 1) {
+            // help
             gsm.setState(GameStateManager.INSTRUCTION);
         }
         if (currentChoice == 2) {
-            System.exit (0);
+            System.exit(0);
         }
     }
-    public void keyPressed (int k) {
+
+    public void keyPressed(int k) {
+
         if (k == KeyEvent.VK_ENTER) {
             select();
         }
@@ -85,5 +97,11 @@ public class MenuState extends GameState {
             }
         }
     }
-    public void keyReleased (int k) {}
+
+    public void keyReleased(int k) {}
+
+    private void resetButtons() {
+        for (MenuButton mb : buttons) mb.resetBools();
+    }
 }
+

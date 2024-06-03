@@ -1,11 +1,10 @@
-package GameStates;
+package UI;
 
 import Image.LoadSave;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class LevelButton {
+public class MenuButton {
     private int xPos, yPos, index, rowIndex;
     private int xOffsetCenter = 50 / 2;
     private BufferedImage[] imgs;
@@ -16,7 +15,7 @@ public class LevelButton {
     private boolean keyOver, keyPressed;
     private Rectangle bounds;
 
-    public LevelButton(int xPos, int yPos, int rowIndex) {
+    public MenuButton(int xPos, int yPos, int rowIndex) {
         this.xPos = xPos;
         this.yPos = yPos;
         this.rowIndex = rowIndex;
@@ -30,7 +29,7 @@ public class LevelButton {
 
     public void loadImgs() {
         imgs = new BufferedImage[3];
-        BufferedImage temp = LoadSave.GetSpriteAtlas(LoadSave.LEVEL_BUTTONS);
+        BufferedImage temp = LoadSave.GetSpriteAtlas(LoadSave.MENU_BUTTONS);
         for (int i = 0; i < 3; i++) {
             imgs[i] = temp.getSubimage(i * B_WIDTH, rowIndex * B_HEIGHT, B_WIDTH, B_HEIGHT);
         }
