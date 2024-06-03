@@ -3,19 +3,27 @@ package stage_3.src.Level;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-
 import stage_3.src.Candies;
 
 public class IntermediateLevel extends EasyLevel implements IDifficultyAdjustment {
-    private List<Point> obstacles = new ArrayList<>(); // Move the obstacles variable to the class level
-
     // public IntermediateLevel() {
     // this.obstacleProbability = 0.0;
     // }
     private Candies[][] candies; // Declare the candies array
-    private int candies_width; // Declare the candies_width variable
+    public int candies_width; // Declare the candies_width variable
     private int candies_height; // Declare the candies_height variable
+
+    @Override
+    // 0.1 = this.obstacleProbability, if we only change the EasyLevel method
+    public void placeObstaclesRandomly(int width, int height, List<Point> obstacles) {
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                if (Math.random() < 0.1) { // 10% chance to place an obstacle
+                    obstacles.add(new Point(i, j));
+                }
+            }
+        }
+    }
 
     @Override
     protected boolean isAdjacent(Point obstacle, Point curPos) {
@@ -35,45 +43,16 @@ public class IntermediateLevel extends EasyLevel implements IDifficultyAdjustmen
         }
         obstacles.removeAll(toRemove);
     }
-    // public void handleMatch(List<Point> matchedCandies) {
-    // for (Point candy : matchedCandies) {
-    // // Remove the candy
-    // candies[candy.x][candy.y] = null;
 
-    // // Check if the candy is near an obstacle and remove the obstacle if it is
-    // for (Point obstacle : new ArrayList<>(obstacles)) { // Create a copy of the
-    // obstacles list to avoid
-    // // ConcurrentModificationException
-    // if (isAdjacent(obstacle, candy)) {
-    // obstacles.remove(obstacle);
-    // break;
-    // }
-    // }
-    // }
-    // }
-
-    @Override
-    // 0.1 = this.obstacleProbability, if we only change the EasyLevel method
-    public void placeObstaclesRandomly(int width, int height, List<Point> obstacles) {
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
-                if (Math.random() < 0.1) { // 10% chance to place an obstacle
-                    obstacles.add(new Point(i, j));
-                }
-            }
-        }
-    }
-
-    /**
-     * Checks if there is a near match to the obstacle at the given position.
-     * A near match is defined as a match in any of the surrounding cells of the
-     * obstacle.
-     *
-     * @param obstaclePosition the position of the obstacle
-     * @return true if there is a near match, false otherwise
-     */
-    private boolean isNearMatch(Point obstaclePosition) {
-        // Check the surrounding cells of the obstacle for matches
+    // /**
+    // * Checks if there is a near match to the obstacle at the given position.
+    // * A near match is defined as a match in any of the surrounding cells of the
+    // * obstacle.
+    // *
+    // * @param obstaclePosition the position of the obstacle
+    // * @return true if there is a near match, false otherwise
+    // */
+    protected boolean isNearMatch(Point obstaclePosition) {
         int x = obstaclePosition.x;
         int y = obstaclePosition.y;
 
@@ -90,30 +69,56 @@ public class IntermediateLevel extends EasyLevel implements IDifficultyAdjustmen
         return false;
     }
 
-    /**
-     * Checks if there is a match at the specified coordinates.
-     *
-     * @param x The x-coordinate of the candy.
-     * @param y The y-coordinate of the candy.
-     * @return true if there is a match at the specified coordinates, false
-     *         otherwise.
-     */
+    // /**
+    // * Checks if there is a match at the specified coordinates.
+    // *
+    // * @param x The x-coordinate of the candy.
+    // * @param y The y-coordinate of the candy.
+    // * @return true if there is a match at the specified coordinates, false
+    // * otherwise.
+    // */
+    // private boolean isMatchAt(int x, int y) {
+    // // Check for horizontal match
+    // if (x > 0 && x < candies_width - 1) {
+    // if (candies[x - 1][y].getCandyType() == candies[x][y].getCandyType()
+    // && candies[x][y].getCandyType() == candies[x + 1][y].getCandyType()) {
+    // return true;
+    // }
+    // }
+    // // Check for vertical match
+    // if (y > 0 && y < candies_height - 1) {
+    // if (candies[x][y - 1].getCandyType() == candies[x][y].getCandyType()
+    // && candies[x][y].getCandyType() == candies[x][y + 1].getCandyType()) {
+    // return true;
+    // }
+    // }
+    // return false;
+
+    // }
     private boolean isMatchAt(int x, int y) {
         // Check for horizontal match
         if (x > 0 && x < candies_width - 1) {
-            if (candies[x - 1][y].getCandyType() == candies[x][y].getCandyType() &&
-                    candies[x][y].getCandyType() == candies[x + 1][y].getCandyType()) {
+            if (candies[x - 1][y].getCandyType() == candies[x][y].getCandyType()
+                    && candies[x][y].getCandyType() == candies[x + 1][y].getCandyType()
+                    && !candies[x - 1][y].isObstacle() && !candies[x][y].isObstacle()
+                    && !candies[x + 1][y].isObstacle()) {
                 return true;
             }
         }
         // Check for vertical match
         if (y > 0 && y < candies_height - 1) {
-            if (candies[x][y - 1].getCandyType() == candies[x][y].getCandyType() &&
-                    candies[x][y].getCandyType() == candies[x][y + 1].getCandyType()) {
+            if (candies[x][y - 1].getCandyType() == candies[x][y].getCandyType()
+                    && candies[x][y].getCandyType() == candies[x][y + 1].getCandyType()
+                    && !candies[x][y - 1].isObstacle() && !candies[x][y].isObstacle()
+                    && !candies[x][y + 1].isObstacle()) {
                 return true;
             }
         }
+        if (candies[x - 1][y].getCandyType() == candies[x][y].getCandyType()
+                && candies[x][y].getCandyType() == candies[x + 1][y].getCandyType()
+                && !candies[x - 1][y].isObstacle() && !candies[x][y].isObstacle() && !candies[x + 1][y].isObstacle()) {
+            return true;
+        }
         return false;
     }
-
 }

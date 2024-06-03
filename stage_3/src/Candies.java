@@ -11,12 +11,14 @@ public class Candies {
     private final Image[] explodingCandies = new Image[6];
     private final Image[] stripedCandiesV = new Image[6];
     private final Image[] stripedCandiesH = new Image[6];
+    private final Image obstacle = new ImageIcon("Textures/obstacle.png").getImage();
     private Image candyShape;
     private int Px, Py;
     private int VelX = 0, VelY = 0;
     private int candyType;
     private boolean broke = false;
     private int candiesPower;
+    private boolean isObstacle;
 
     Candies() {
         candies[0] = new ImageIcon("Textures/Candies 50x50/blue.png").getImage();
@@ -95,6 +97,7 @@ public class Candies {
         stripedCandiesH[CandyColors.ORANGE] = getImageSpecialCandies("Striped_orange_h.png");
         stripedCandiesH[CandyColors.VIOLET] = getImageSpecialCandies("Striped_purple_h.png");
         stripedCandiesH[CandyColors.YELLOW] = getImageSpecialCandies("Striped_yellow_h.png");
+
     }
 
     public Image getImageCandies(String fileName) {
@@ -114,8 +117,12 @@ public class Candies {
         // on Windows, it will be "Textures\\Special_candies\\fileName"
     }
 
-    public Image getImageExplodingCandies(String fileName) {
-        return new ImageIcon("Textures/Exploding_candies/" + fileName).getImage();
+    public boolean isObstacle() {
+        return isObstacle;
+    }
+
+    public void setObstacle(boolean isObstacle) {
+        this.isObstacle = isObstacle;
     }
 
     public void setShape(int x) {

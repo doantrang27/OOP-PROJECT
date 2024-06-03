@@ -20,6 +20,13 @@ public class EasyLevel implements IDifficultyAdjustment {
 
     }
 
+    public void removeWallObstaclesNear(Point point, List<Point> wallObstacles) {
+    }
+
+    @Override
+    public void placeWallObstaclesRandomly(int width, int height, List<Point> wallObstacles) {
+    }
+
     // @Override
     // public void removeObstaclesNear(Point position, List<Point> obstacles) {
     // // TODO Auto-generated method stub

@@ -72,6 +72,7 @@ public class Logic {
 
         // placeObstaclesRandomly();
         this.gameLevel.placeObstaclesRandomly(candies_width, candies_height, obstacles);
+        this.gameLevel.placeWallObstaclesRandomly(candies_width, candies_height, wallObstacles);
 
         for (int i = 0; i < candies_width; i++) {
             for (int j = 0; j < candies_height; j++) {
@@ -93,7 +94,21 @@ public class Logic {
 
     }
 
-    // private void placeObstaclesRandomly() {
+    IDifficultyAdjustment gameLevel;
+
+    public void setGameDifficulty(String difficulty) {
+        if (difficulty.equals("EASY")) {
+            gameLevel = new EasyLevel();
+        } else if (difficulty.equals("MEDIUM")) {
+            gameLevel = new IntermediateLevel();
+        } else if (difficulty.equals("HARD")) {
+            gameLevel = new DifficultLevel();
+        } else {
+            gameLevel = new EasyLevel();
+        }
+    }
+
+    // private void placeObstaclesRandomly() {P
     // for (int i = 0; i < candies_width; i++) {
     // for (int j = 0; j < candies_height; j++) {
     // if (Math.random() < 0.1) { // 10% chance to place an obstacle
@@ -149,6 +164,7 @@ public class Logic {
                     matchFound = true; // A match is found
                     // removeObstaclesNear(i, j);
                     this.gameLevel.removeObstaclesNear(new Point(i, j), obstacles);
+                    this.gameLevel.removeWallObstaclesNear(new Point(i, j), wallObstacles);
                     // return true;
                 } else if (i < candies_width - 2 && candies[i][j].getCandyType() == candies[i + 1][j].getCandyType()
                         && candies[i][j].getCandyType() == candies[i + 2][j].getCandyType()) {
@@ -157,6 +173,7 @@ public class Logic {
                     // removeObstaclesNear(i, j); // Call the method to remove obstacles near the
                     // match
                     this.gameLevel.removeObstaclesNear(new Point(i, j), obstacles);
+                    this.gameLevel.removeWallObstaclesNear(new Point(i, j), wallObstacles);
 
                 }
             }
@@ -189,18 +206,6 @@ public class Logic {
     // }
 
     // }
-
-    IDifficultyAdjustment gameLevel;
-
-    public void setGameDifficulty(String difficulty) {
-        if (difficulty.equals("EASY")) {
-            gameLevel = new EasyLevel();
-        } else if (difficulty.equals("MEDIUM")) {
-            gameLevel = new IntermediateLevel();
-        } else {
-            gameLevel = new EasyLevel();
-        }
-    }
 
     // DifficultLevel level = DifficultLevel.EASY;
 
@@ -724,9 +729,8 @@ public class Logic {
             }
             System.out.println("outOfBounds1");
         }
-        // removeObstaclesNear(i, j);
-
         gameLevel.removeObstaclesNear(new Point(i, j), this.obstacles);
+        gameLevel.removeWallObstaclesNear(new Point(i, j), this.wallObstacles);
 
     }
 
@@ -735,6 +739,28 @@ public class Logic {
         private boolean isActive;
 
         public Obstacle(int x, int y) {
+            this.position = new Point(x, y);
+            this.isActive = true;
+        }
+
+        public Point getPosition() {
+            return position;
+        }
+
+        public boolean isActive() {
+            return isActive;
+        }
+
+        public void setActive(boolean active) {
+            isActive = active;
+        }
+    }
+
+    public class wallObstacle {
+        private Point position;
+        private boolean isActive;
+
+        public wallObstacle(int x, int y) {
             this.position = new Point(x, y);
             this.isActive = true;
         }

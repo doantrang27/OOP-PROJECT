@@ -8,4 +8,8 @@ public interface IDifficultyAdjustment {
 
     public void placeObstaclesRandomly(int width, int height, List<Point> obstacles);
 
+    public void removeWallObstaclesNear(Point point, List<Point> wallObstacles);
+
+    public void placeWallObstaclesRandomly(int width, int height, List<Point> wallObstacles);
+
 }
