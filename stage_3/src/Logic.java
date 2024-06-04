@@ -108,17 +108,6 @@ public class Logic {
         }
     }
 
-    // private void placeObstaclesRandomly() {P
-    // for (int i = 0; i < candies_width; i++) {
-    // for (int j = 0; j < candies_height; j++) {
-    // if (Math.random() < 0.1) { // 10% chance to place an obstacle
-    // obstacles.add(new Point(i, j));
-    // }
-    // }
-    // }
-    // }
-
-    // end
     public void mouseClicked(MouseEvent e) {
         clicked_x = e.getX();
         clicked_y = e.getY();
@@ -182,57 +171,6 @@ public class Logic {
         // return false;
         return matchFound;
     }
-    // After finding a match, check for obstacles
-
-    // private boolean nextMatchFound() {
-    // if (match_checker()) {
-    // for (Point obstacle : obstacles) {
-    // if (isNearMatch(obstacle.getPosition())) {
-    // obstacle.setActive(false);
-    // }
-    // }
-    // }
-    // return false;
-    // }
-
-    // private void removeObstaclesNear(int i, int j) {
-    // Iterator<Obstacle> iterator = obstacles.iterator();
-    // while (iterator.hasNext()) {
-    // Obstacle obstacle = iterator.next();
-    // if (obstacle.isActive() && isAdjacent(obstacle.getPosition(), i, j)) {
-    // obstacle.setActive(false);
-    // iterator.remove(); // Remove the obstacle if it's no longer active
-    // }
-    // }
-
-    // }
-
-    // DifficultLevel level = DifficultLevel.EASY;
-
-    // private void removeObstaclesNear(int i, int j) {
-    // switch (level) {
-    // case EASY:
-    // break;
-    // case HARD:
-    // break;
-    // case LEGENDARY:
-    // break;
-    // case MEDIUM:
-
-    // List<Point> toRemove = new ArrayList<>();
-    // for (Point obstacle : obstacles) {
-    // if (isAdjacent(obstacle, i, j)) {
-    // toRemove.add(obstacle);
-    // }
-    // }
-    // obstacles.removeAll(toRemove);
-
-    // break;
-    // default:
-    // break;
-
-    // }
-    // }
 
     public void ResetCandies() {
         while (!noMatchingCandies()) {
@@ -777,66 +715,6 @@ public class Logic {
             isActive = active;
         }
     }
-
-    // private void placeObstaclesRandomly() {
-    // for (int i = 0; i < candies_width; i++) {
-    // for (int j = 0; j < candies_height; j++) {
-    // if (Math.random() < 0.1) { // 10% chance to place an obstacle
-    // obstacles.add(new Point(i, j));
-    // }
-    // }
-    // }
-    // }
-
-    // private boolean isNearMatch(Point obstaclePosition) {
-    // // Check the surrounding cells of the obstacle for matches
-    // int x = obstaclePosition.x;
-    // int y = obstaclePosition.y;
-
-    // // Check horizontally and vertically around the obstacle
-    // for (int i = -1; i <= 1; i++) {
-    // for (int j = -1; j <= 1; j++) {
-    // if (i == 0 && j == 0)
-    // continue; // Skip the obstacle's own position
-    // if (isMatchAt(x + i, y + j)) {
-    // return true;
-    // }
-    // }
-    // }
-    // return false;
-    // }
-
-    // private boolean isMatchAt(int x, int y) {
-    // // Check for horizontal match
-    // if (x > 0 && x < candies_width - 1) {
-    // if (candies[x - 1][y].getCandyType() == candies[x][y].getCandyType() &&
-    // candies[x][y].getCandyType() == candies[x + 1][y].getCandyType()) {
-    // return true;
-    // }
-    // }
-    // // Check for vertical match
-    // if (y > 0 && y < candies_height - 1) {
-    // if (candies[x][y - 1].getCandyType() == candies[x][y].getCandyType() &&
-    // candies[x][y].getCandyType() == candies[x][y + 1].getCandyType()) {
-    // return true;
-    // }
-    // }
-    // return false;
-    // }
-
-    // private boolean isAdjacent(Point obstaclePosition, int i, int j) {
-    // // Determine if the obstacle is adjacent to the given cell (i, j)
-    // int x = obstaclePosition.x;
-    // int y = obstaclePosition.y;
-
-    // // Check if the obstacle is in one of the eight surrounding cells
-    // return (x >= i - 1 && x <= i + 1) && (y >= j - 1 && y <= j + 1);
-    // }
-    // private boolean isAdjacent(Point obstacle, int i, int j) {
-    // int dx = Math.abs(obstacle.x - i);
-    // int dy = Math.abs(obstacle.y - j);
-    // return (dx + dy == 1); // adjacent if only one step away
-    // }
 
     public void Move() {
         for (int i = 0; i < candies_width; i++) {

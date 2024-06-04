@@ -1,14 +1,5 @@
 package stage_3.src; //
 
-// class SpecialCandy
-// class ExplosibleCandy
-// class RegularCandy
-// class RandomCandy
-
-// candy_crush.candy
-
-// import candy_crush.candy.RandomCandy
-
 import java.awt.*;
 import javax.swing.*;
 

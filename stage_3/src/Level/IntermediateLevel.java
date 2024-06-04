@@ -44,14 +44,14 @@ public class IntermediateLevel extends EasyLevel implements IDifficultyAdjustmen
         obstacles.removeAll(toRemove);
     }
 
-    // /**
-    // * Checks if there is a near match to the obstacle at the given position.
-    // * A near match is defined as a match in any of the surrounding cells of the
-    // * obstacle.
-    // *
-    // * @param obstaclePosition the position of the obstacle
-    // * @return true if there is a near match, false otherwise
-    // */
+    /**
+     * Checks if there is a near match to the obstacle at the given position.
+     * A near match is defined as a match in any of the surrounding cells of the
+     * obstacle.
+     *
+     * @param obstaclePosition the position of the obstacle
+     * @return true if there is a near match, false otherwise
+     */
     protected boolean isNearMatch(Point obstaclePosition) {
         int x = obstaclePosition.x;
         int y = obstaclePosition.y;
@@ -69,32 +69,15 @@ public class IntermediateLevel extends EasyLevel implements IDifficultyAdjustmen
         return false;
     }
 
-    // /**
-    // * Checks if there is a match at the specified coordinates.
-    // *
-    // * @param x The x-coordinate of the candy.
-    // * @param y The y-coordinate of the candy.
-    // * @return true if there is a match at the specified coordinates, false
-    // * otherwise.
-    // */
-    // private boolean isMatchAt(int x, int y) {
-    // // Check for horizontal match
-    // if (x > 0 && x < candies_width - 1) {
-    // if (candies[x - 1][y].getCandyType() == candies[x][y].getCandyType()
-    // && candies[x][y].getCandyType() == candies[x + 1][y].getCandyType()) {
-    // return true;
-    // }
-    // }
-    // // Check for vertical match
-    // if (y > 0 && y < candies_height - 1) {
-    // if (candies[x][y - 1].getCandyType() == candies[x][y].getCandyType()
-    // && candies[x][y].getCandyType() == candies[x][y + 1].getCandyType()) {
-    // return true;
-    // }
-    // }
-    // return false;
+    /**
+     * Checks if there is a match at the specified coordinates.
+     *
+     * @param x The x-coordinate of the candy.
+     * @param y The y-coordinate of the candy.
+     * @return true if there is a match at the specified coordinates, false
+     *         otherwise.
+     */
 
-    // }
     private boolean isMatchAt(int x, int y) {
         // Check for horizontal match
         if (x > 0 && x < candies_width - 1) {

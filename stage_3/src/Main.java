@@ -17,9 +17,6 @@ public class Main {
         frame.setSize(800, 600);
         frame.setVisible(true);
 
-        // DifficultLevel difficultLevel = new DifficultLevel();
-        // EasyLevel EasyLevel = new EasyLevel();
-
     }
 
 }
