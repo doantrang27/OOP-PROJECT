@@ -1,3 +1,10 @@
 {
-    "editor.formatOnSave": true
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": "explicit"
+    },
+    // only break on 120 characters
+    "editor.rulers": [
+        120
+    ],
 }
