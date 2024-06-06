@@ -44,7 +44,7 @@ public class Logic {
     private final int targetScore;
     private final Image endGame = new ImageIcon(/* ảnh end */).getImage();
     private final Image Dispenser = new ImageIcon("Textures/Dispenser.png").getImage();
-    private final Image obstacleImage = new ImageIcon("Candy_Crush/res/ice.png").getImage();
+    private final Image obstacleImage = new ImageIcon("Textures/ice.png").getImage();
     private final Image wallImage = new ImageIcon("Textures/wall.png").getImage();
     private List<Point> obstacles = new ArrayList<>();
     private List<Point> wallObstacles = new ArrayList<>();
@@ -58,10 +58,26 @@ public class Logic {
         int heightDiffculty = candies_height * 50;
         int widthDiffculty = candies_width * 50;
         // chỗ này để set điểm
-        targetScore = Moves_count * 70 + heightDiffculty + widthDiffculty;
+        // targetScore = Moves_count * 70 + heightDiffculty + widthDiffculty;
+        switch (gameDifficulty.toUpperCase()) {
+            case "EASY":
+                this.Moves_count = 10;
+                this.targetScore = this.Moves_count * 70 + heightDiffculty + widthDiffculty;
+                break;
+            case "MEDIUM":
+                this.Moves_count = 15;
+                this.targetScore = this.Moves_count * 70 + heightDiffculty + widthDiffculty;
+                break;
+            case "HARD":
+                this.Moves_count = 20;
+                this.targetScore = this.Moves_count * 70 + heightDiffculty + widthDiffculty;
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid difficulty level: " + gameDifficulty);
+        }
         candies = new Candies[candies_width][candies_height];
         Replacement_candies = new Candies[candies_width][candies_height];
-        board = new Board(candies_height, candies_width);
+        board = new Board(candies_height, candies_width, gameDifficulty);
 
         try {
             Candy_font = Font.createFont(Font.TRUETYPE_FONT, new File("Textures/CANDY.TTF")).deriveFont(30f);

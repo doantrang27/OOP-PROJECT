@@ -7,9 +7,29 @@ public class Board {
     ImageIcon[] board = new ImageIcon[2];
     private int board_height, board_width;
 
-    Board(int board_height, int board_width) {
-        board[0] = new ImageIcon("Textures/wood_cell.png");
-        board[1] = new ImageIcon("Textures/wood_cell.png");
+    // Board(int board_height, int board_width) {
+    // board[0] = new ImageIcon("Textures/wood_cell.png");
+    // board[1] = new ImageIcon("Textures/wood_cell.png");
+    // this.board_height = board_height;
+    // this.board_width = board_width;
+    // }
+    Board(int board_height, int board_width, String difficulty) {
+        switch (difficulty.toUpperCase()) {
+            case "EASY":
+                board[0] = new ImageIcon("Textures/wood_cell.png");
+                board[1] = new ImageIcon("Textures/wood_cell.png");
+                break;
+            case "MEDIUM":
+                board[0] = new ImageIcon("Textures/pink1_cell.png");
+                board[1] = new ImageIcon("Textures/pink2_cell.png");
+                break;
+            case "HARD":
+                board[0] = new ImageIcon("Textures/boar.png");
+                board[1] = new ImageIcon("Textures/board_1.png");
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid difficulty level: " + difficulty);
+        }
         this.board_height = board_height;
         this.board_width = board_width;
     }
