@@ -22,7 +22,7 @@ public class Instruction extends GameState {
         this.gsm = gsm;
         init();
         try {
-            bgInstruction = new Background("/Background/BgInstruction.jpg", 0);
+            bgInstruction = new Background("/out/production/OOP-PROJECT/Background/BgInstruction.jpg", 0);
             tilecolor = new Color(255, 130, 171);
             tilefont = new Font("Phosphate", Font.PLAIN, 40);
             font = new Font("Bradley Hand", Font.PLAIN, 20);
