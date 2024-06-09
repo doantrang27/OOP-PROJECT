@@ -30,7 +30,7 @@ public class Level extends GameState{
             try {
 //                title = ImageIO.read(getClass().getResourceAsStream("/UI/button.png"));
 //                holder = ImageIO.read(getClass().getResourceAsStream("/UI/button.png"));
-                bgLevel = new Background("/Background/BgLevel.png", 0.5);
+                bgLevel = new Background("/out/production/OOP-PROJECT/Background/BgLevel.png", 0.5);
                 // bg.setVector(-1, 0);
             } catch (Exception e) {
                 e.printStackTrace();
