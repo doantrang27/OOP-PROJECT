@@ -29,7 +29,7 @@ public class MenuState extends GameState {
         this.gsm = gsm;
 
         try {
-            bg = new Background("/Background/BgMenu.jpeg", 0.5);
+            bg = new Background("/out/production/OOP-PROJECT/Background/BgMenu.jpeg", 0.5);
             bg.setVector(0, 0);
             titleColor = new Color(255, 130, 171);
             titleFont = new Font("Phosphate", Font.PLAIN, 40);
