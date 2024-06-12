@@ -10,12 +10,15 @@ import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.text.html.HTMLDocument.Iterator;
 
+import GameStates.Level;
 import stage_3.src.Level.IDifficultyAdjustment;
 import stage_3.src.Level.DifficultLevel;
 import stage_3.src.Level.EasyLevel;
 import stage_3.src.Level.IntermediateLevel;
 
 public class Logic {
+    private String gameDifficulty;
+
     private final Board board;
     protected final int candies_width, candies_height;
     protected final Candies[][] candies;
@@ -48,9 +51,11 @@ public class Logic {
     private final Image wallImage = new ImageIcon("Textures/wall.png").getImage();
     private List<Point> obstacles = new ArrayList<>();
     private List<Point> wallObstacles = new ArrayList<>();
+    private Level level;
 
     public Logic(int candies_width, int candies_height, int moves_count, int AmountOfCandies, String gameDifficulty) {
         this.setGameDifficulty(gameDifficulty);
+
         this.Moves_count = moves_count;
         this.AmountOfCandies = AmountOfCandies;
         this.candies_width = candies_width;
@@ -112,7 +117,13 @@ public class Logic {
 
     IDifficultyAdjustment gameLevel;
 
+    /**
+     * Sets the game difficulty based on the given difficulty level.
+     * 
+     * @param difficulty the difficulty level of the game (EASY, MEDIUM, HARD)
+     */
     public void setGameDifficulty(String difficulty) {
+        this.gameDifficulty = difficulty;
         if (difficulty.equals("EASY")) {
             gameLevel = new EasyLevel();
         } else if (difficulty.equals("MEDIUM")) {
@@ -121,6 +132,28 @@ public class Logic {
             gameLevel = new DifficultLevel();
         } else {
             gameLevel = new EasyLevel();
+        }
+    }
+
+    // public String getGameDifficulty() {
+    // return this.gameDifficulty;
+    // }
+
+    public int getCurrentLevel() {
+        return Level.currentLevel;
+    }
+
+    public String getGameDifficulty() {
+        if (Level.currentLevel == 0) {
+            return "EASY";
+        }
+        if (Level.currentLevel == 1) {
+            return "MEDIUM";
+        }
+        if (Level.currentLevel == 2) {
+            return "HARD";
+        } else {
+            return "UNKNOWN";
         }
     }
 
@@ -797,5 +830,10 @@ public class Logic {
             }
         }
     }
+
+    // public String setLogic() {
+    // // TODO Auto-generated method stub
+    // throw new UnsupportedOperationException("Unimplemented method 'setLogic'");
+    // }
 
 }

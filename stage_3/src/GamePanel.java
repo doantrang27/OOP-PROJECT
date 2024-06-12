@@ -27,10 +27,14 @@ public class GamePanel extends JPanel {
     private Logic logic;
     // private String currentLevel;
 
-    public GamePanel() {
-        gameLogic = new Logic(7, 7, 15, 5, "EASY");
-        // currentLevel = "EASY"; // Set default level
-        // gameLogic = new Logic(7, 7, 15, 5, currentLevel);
+    public GamePanel(String gameDifficulty) {
+
+        gameLogic = new Logic(7, 7, 15, 5, gameDifficulty);
+        // setPreferredSize(new Dimension(800, 600)); // Set your preferred size
+
+        // gameLogic = new Logic(7, 7, 15, 5, logic.getGameDifficulty());
+        // gameLogic = new Logic(7, 7, 15, 5, "EASY");
+
         int delay = 1000 / 100;
         timer = new Timer(delay, e -> {
             gameLogic.Break_detector();
@@ -55,7 +59,9 @@ public class GamePanel extends JPanel {
     public void setLogic(Logic logic) {
 
         this.logic = logic;
+
     }
+
     // GamePanel() {
     // initializeGameLogic();
     // Level level = new Level();

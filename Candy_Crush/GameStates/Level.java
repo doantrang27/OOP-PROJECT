@@ -7,6 +7,7 @@ import UI.LevelButton;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -20,7 +21,7 @@ public class Level extends GameState {
     private int selectedLevel;
 
     private Background bgLevel;
-    private int currentLevel = 0;
+    public static int currentLevel = 0;
     private BufferedImage holder, title;
 
     private LevelButton[] buttons = new LevelButton[3];
@@ -85,31 +86,87 @@ public class Level extends GameState {
     }
 
     private void select() {
-        stage_3.src.GamePanel gamePanel = new stage_3.src.GamePanel();
+        // stage_3.src.GamePanel gamePanel = new stage_3.src.GamePanel();
+        Logic gameLogic;
+        String gameDifficulty = "";
         if (currentLevel == 0) {
-            logic = new Logic(7, 7, 15, 5, "EASY");
-            logic.setGameDifficulty("EASY");
-            gamePanel.setLogic(logic);
-
+            gameDifficulty = "EASY";
+            gameLogic = new Logic(7, 7, 15, 5, gameDifficulty);
         } else if (currentLevel == 1) {
-            logic = new Logic(7, 7, 15, 5, "MEDIUM");
-            logic.setGameDifficulty("MEDIUM");
-            gamePanel.setLogic(logic);
-
+            gameDifficulty = "MEDIUM";
+            gameLogic = new Logic(7, 7, 15, 5, gameDifficulty);
         } else if (currentLevel == 2) {
-            logic = new Logic(7, 7, 15, 5, "HARD");
-            logic.setGameDifficulty("HARD");
-            gamePanel.setLogic(logic);
+            gameDifficulty = "HARD";
+            gameLogic = new Logic(7, 7, 15, 5, gameDifficulty);
+        } else {
+            // Handle the case where currentLevel is not 0, 1, or 2
+            return;
         }
+        // gamePanel.setLogic(gameLogic);
+        stage_3.src.GamePanel gamePanel = new stage_3.src.GamePanel(gameDifficulty);
+
         if (onLevelSelectedListener != null) {
             onLevelSelectedListener.onLevelSelected(currentLevel);
         }
         JFrame frame = new JFrame("Candy Crush");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(gamePanel);
         frame.pack();
         frame.setVisible(true);
-
     }
+
+    // public String getGameDifficulty() {
+    // if (currentLevel == 0) {
+    // return "EASY";
+    // }
+    // if (currentLevel == 1) {
+    // return "MEDIUM";
+    // }
+    // if (currentLevel == 2) {
+    // return "HARD";
+    // }
+    // // Add other conditions for different levels if needed
+    // else {
+    // return "UNKNOWN"; // Default case
+    // }
+    // }
+    // private void select() {
+    // stage_3.src.GamePanel gamePanel = new stage_3.src.GamePanel();
+    // Logic gameLogic;
+    // if (currentLevel == 0) {
+    // gameLogic = new Logic(7, 7, 15, 5, "EASY");
+    // // logic.getGameDifficulty();
+
+    // // gamePanel.setLogic(logic);
+
+    // // gameLogic.setGameDifficulty("EASY");
+    // // gamePanel.setLogic(logic);
+    // // gamePanel.add(gameLogic);
+    // // gameLogic.setGameDifficulty("EASY");
+
+    // // JLabel gameLogicLabel = new JLabel(gameLogic.getGameDifficulty());
+    // // gamePanel.add(gameLogicLabel);
+
+    // } else if (currentLevel == 1) {
+    // gameLogic = new Logic(7, 7, 15, 5, "MEDIUM");
+    // logic.setGameDifficulty("MEDIUM");
+    // gamePanel.setLogic(logic);
+
+    // } else if (currentLevel == 2) {
+    // logic = new Logic(7, 7, 15, 5, "HARD");
+    // logic.setGameDifficulty("HARD");
+    // gamePanel.setLogic(logic);
+    // }
+
+    // if (onLevelSelectedListener != null) {
+    // onLevelSelectedListener.onLevelSelected(currentLevel);
+    // }
+    // JFrame frame = new JFrame("Candy Crush");
+    // frame.add(gamePanel);
+    // frame.pack();
+    // frame.setVisible(true);
+
+    // }
 
     public void setOnLevelSelectedListener(OnLevelSelectedListener listener) {
         this.onLevelSelectedListener = listener;

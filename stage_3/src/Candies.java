@@ -21,61 +21,19 @@ public class Candies {
     private boolean isObstacle;
 
     Candies() {
-        candies[0] = new ImageIcon("Textures/Candies 50x50/blue.png").getImage();
-        candies[1] = new ImageIcon("Textures/Candies 50x50/green.png").getImage();
-        candies[2] = new ImageIcon("Textures/Candies 50x50/red.png").getImage();
-        candies[3] = new ImageIcon("Textures/Candies 50x50/orange.png").getImage();
-        candies[4] = new ImageIcon("Textures/Candies 50x50/violet.png").getImage();
-        candies[5] = new ImageIcon("Textures/Candies 50x50/yellow.png").getImage();
+        candies[CandyColors.BLUE] = new ImageIcon("Textures/Candies 50x50/blue.png").getImage();
+        candies[CandyColors.GREEN] = new ImageIcon("Textures/Candies 50x50/green.png").getImage();
+        candies[CandyColors.RED] = new ImageIcon("Textures/Candies 50x50/red.png").getImage();
+        candies[CandyColors.ORANGE] = new ImageIcon("Textures/Candies 50x50/orange.png").getImage();
+        candies[CandyColors.VIOLET] = new ImageIcon("Textures/Candies 50x50/violet.png").getImage();
+        candies[CandyColors.YELLOW] = new ImageIcon("Textures/Candies 50x50/yellow.png").getImage();
 
-        candyAnimation[0] = new ImageIcon("Textures/CandyBreaking/blue.gif").getImage();
-        candyAnimation[1] = new ImageIcon("Textures/CandyBreaking/green.gif").getImage();
-        candyAnimation[2] = new ImageIcon("Textures/CandyBreaking/red.gif").getImage();
-        candyAnimation[3] = new ImageIcon("Textures/CandyBreaking/orange.gif").getImage();
-        candyAnimation[4] = new ImageIcon("Textures/CandyBreaking/purple.gif").getImage();
-        candyAnimation[5] = new ImageIcon("Textures/CandyBreaking/yellow.gif").getImage();
-        // explodingCandies[0] = new
-        // ImageIcon("Textures/Special_candies/blue.png").getImage();
-        // explodingCandies[1] = new
-        // ImageIcon("Textures/Special_candies/green.png").getImage();
-        // explodingCandies[2] = new
-        // ImageIcon("Textures/Special_candies/red.png").getImage();
-        // explodingCandies[3] = new
-        // ImageIcon("Textures/Special_candies/orange.png").getImage();
-        // explodingCandies[4] = new
-        // ImageIcon("Textures/Special_candies/violet.png").getImage();
-        // explodingCandies[5] = new
-        // ImageIcon("Textures/Special_candies/yellow.png").getImage();
-        // stripedCandiesV[0] = new
-        // ImageIcon("Textures/Special_candies/Striped_blue_v.png").getImage();
-        // stripedCandiesV[1] = new
-        // ImageIcon("Textures/Special_candies/Striped_green_v.png")
-        // .getImage();
-        // stripedCandiesV[2] = new
-        // ImageIcon("Textures/Special_candies/Striped_red_v.png").getImage();
-        // stripedCandiesV[3] = new
-        // ImageIcon("Textures/Special_candies/Striped_orange_v.png")
-        // .getImage();
-        // stripedCandiesV[4] = new
-        // ImageIcon("Textures/Special_candies/Striped_purple_v.png")
-        // .getImage();
-        // stripedCandiesV[5] = new
-        // ImageIcon("Textures/Special_candies/Striped_yellow_v.png")
-        // .getImage();
-        // stripedCandiesH[0] = new
-        // ImageIcon("Textures/Special_candies/Striped_blue_h.png").getImage();
-        // stripedCandiesH[1] = new
-        // ImageIcon("Textures/Special_candies/Striped_green_h.png")
-        // .getImage();
-        // stripedCandiesH[2] = new
-        // ImageIcon("Textures/Special_candies/Striped_red_h.png").getImage();
-        // stripedCandiesH[3] = new
-        // ImageIcon("Textures/Special_candies/Striped_orange_h.png")
-        // .getImage();
-        // stripedCandiesH[4] = new
-        // ImageIcon("Textures/Special_candies/Striped_purple_h.png").getImage();
-        // stripedCandiesH[5] = new
-        // ImageIcon("Textures/Special_candies/Striped_yellow_h.png").getImage();
+        candyAnimation[CandyColors.BLUE] = new ImageIcon("Textures/CandyBreaking/blue.gif").getImage();
+        candyAnimation[CandyColors.GREEN] = new ImageIcon("Textures/CandyBreaking/green.gif").getImage();
+        candyAnimation[CandyColors.RED] = new ImageIcon("Textures/CandyBreaking/red.gif").getImage();
+        candyAnimation[CandyColors.ORANGE] = new ImageIcon("Textures/CandyBreaking/orange.gif").getImage();
+        candyAnimation[CandyColors.VIOLET] = new ImageIcon("Textures/CandyBreaking/purple.gif").getImage();
+        candyAnimation[CandyColors.YELLOW] = new ImageIcon("Textures/CandyBreaking/yellow.gif").getImage();
 
         explodingCandies[CandyColors.BLUE] = getImageSpecialCandies("blue.png");
         explodingCandies[CandyColors.GREEN] = getImageSpecialCandies("green.png");
