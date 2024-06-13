@@ -32,7 +32,10 @@ public class Logic {
     private int FirstCandyCol, FirstCandyRow, SecondCandyRow, SecondCandyCol;
     private final Candies switchedCandy = new Candies();
     private final Image game_background = new ImageIcon("Textures/bg-candy.jpg").getImage();
-    private final Image win_gif = new ImageIcon("Textures/oie_OeMAOSwhprac.gif").getImage();
+    // private final Image win_gif = new
+    // ImageIcon("Textures/oie_OeMAOSwhprac.gif").getImage();
+    private final Image win_gif = new ImageIcon("//").getImage();
+
     private final Image out_of_moves_image = new ImageIcon(/*
                                                             * out of move imange
                                                             */).getImage();

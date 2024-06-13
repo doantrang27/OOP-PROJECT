@@ -165,9 +165,9 @@ public class GamePanel extends JPanel {
         if (gameDifficulty.equals("EASY")) {
             g.drawString("10", moveFigureX - 10, moveFigureY + 20);
         } else if (gameDifficulty.equals("MEDIUM")) {
-            g.drawString("15", moveFigureX - 33, moveFigureY - 30);
+            g.drawString("15", moveFigureX - 10, moveFigureY + 20);
         } else if (gameDifficulty.equals("HARD")) {
-            g.drawString("20", moveFigureX - 33, moveFigureY - 30);
+            g.drawString("20", moveFigureX - 10, moveFigureY + 20);
         }
         // star
         // Draw star_1 on top of pipeLoad
@@ -183,6 +183,77 @@ public class GamePanel extends JPanel {
         g.drawImage(star_1, pipeLoadX + pipeLoad.getWidth() / 12 - 15,
                 pipeLoadY + pipeLoad.getHeight() / 3 - star_3.getHeight() / 4 + 5, star_3.getWidth() / 4,
                 star_1.getHeight() / 4, this);
+        if (playerScore >= targetScore) {
+            Reset();
+            g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+            // Create a semi-transparent color (e.g., semi-transparent black)
+            Color pinkBackground = new Color(255, 105, 180, 127); // RGB for pink with half transparency
+
+            // Set the color
+            g.setColor(pinkBackground);
+
+            // Draw a rectangle that covers the entire game area
+            g.fillRect(0, 0, getWidth(), getHeight());
+
+            // Create a centered rectangle
+            int rectWidth = 400; // Increased size for a bigger rectangle
+            int rectHeight = 200; // Increased size for a bigger rectangle
+            int rectX = (getWidth() - rectWidth) / 2;
+            int rectY = (getHeight() - rectHeight) / 2;
+            g.setColor(Color.WHITE);
+            g.fillRect(rectX, rectY, rectWidth, rectHeight);
+
+            // Draw "YOU WIN" text in the center of the rectangle
+            g.setColor(Color.BLACK);
+            g.setFont(new Font("Impact", Font.PLAIN, 50)); // Increased size for bigger text
+            FontMetrics fm = g.getFontMetrics();
+            int textWidth = fm.stringWidth("YOU WIN");
+            int textX = rectX + (rectWidth - textWidth) / 2;
+            int textY = rectY + ((rectHeight - fm.getHeight()) / 2) + fm.getAscent();
+            g.drawString("YOU WIN", textX, textY);
+        } else if (playerScore < targetScore) {
+            Reset();
+            g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+            Color pinkBackground = new Color(255, 105, 180, 127); // RGB for pink with half transparency
+
+            // Set the color
+            g.setColor(pinkBackground);
+
+            // Draw a rectangle that covers the entire game area
+            g.fillRect(0, 0, getWidth(), getHeight());
+            // Create a red color for losing
+            Color redBackground = new Color(255, 0, 0);
+
+            // Set the color
+            g.setColor(redBackground);
+
+            // Draw a rectangle that covers the entire game area
+            g.fillRect(0, 0, getWidth(), getHeight());
+
+            // Create a centered rectangle
+            int rectWidth = 400; // Increased size for a bigger rectangle
+            int rectHeight = 200; // Increased size for a bigger rectangle
+            int rectX = (getWidth() - rectWidth) / 2;
+            int rectY = (getHeight() - rectHeight) / 2;
+            g.setColor(Color.WHITE);
+            g.fillRect(rectX, rectY, rectWidth, rectHeight);
+
+            // Draw "YOU LOSE" text in the center of the rectangle
+            g.setColor(Color.BLACK);
+            g.setFont(new Font("Impact", Font.PLAIN, 50)); // Increased size for bigger text
+            FontMetrics fm = g.getFontMetrics();
+            int textWidth = fm.stringWidth("YOU LOSE");
+            int textX = rectX + (rectWidth - textWidth) / 2;
+            int textY = rectY + ((rectHeight - fm.getHeight()) / 2) + fm.getAscent();
+            g.drawString("YOU LOSE", textX, textY);
+        }
+    }
+
+    public void Reset() {
+
+        gameLogic.Reset();
+
+        // If you have other state to reset, do it here
     }
 
     public class AL extends MouseAdapter implements MouseListener, MouseMotionListener {
