@@ -12,6 +12,7 @@ public class Candies {
     private final Image[] stripedCandiesV = new Image[6];
     private final Image[] stripedCandiesH = new Image[6];
     private final Image obstacle = new ImageIcon("Textures/obstacle.png").getImage();
+
     private Image candyShape;
     private int Px, Py;
     private int VelX = 0, VelY = 0;
@@ -21,19 +22,19 @@ public class Candies {
     private boolean isObstacle;
 
     Candies() {
-        candies[CandyColors.BLUE] = new ImageIcon("Textures/Candies 50x50/blue.png").getImage();
-        candies[CandyColors.GREEN] = new ImageIcon("Textures/Candies 50x50/green.png").getImage();
-        candies[CandyColors.RED] = new ImageIcon("Textures/Candies 50x50/red.png").getImage();
-        candies[CandyColors.ORANGE] = new ImageIcon("Textures/Candies 50x50/orange.png").getImage();
-        candies[CandyColors.VIOLET] = new ImageIcon("Textures/Candies 50x50/violet.png").getImage();
-        candies[CandyColors.YELLOW] = new ImageIcon("Textures/Candies 50x50/yellow.png").getImage();
+        candies[CandyColors.BLUE] = getImageCandies("blue.png");
+        candies[CandyColors.GREEN] = getImageCandies("green.png");
+        candies[CandyColors.RED] = getImageCandies("red.png");
+        candies[CandyColors.ORANGE] = getImageCandies("orange.png");
+        candies[CandyColors.VIOLET] = getImageCandies("violet.png");
+        candies[CandyColors.YELLOW] = getImageCandies("yellow.png");
 
-        candyAnimation[CandyColors.BLUE] = new ImageIcon("Textures/CandyBreaking/blue.gif").getImage();
-        candyAnimation[CandyColors.GREEN] = new ImageIcon("Textures/CandyBreaking/green.gif").getImage();
-        candyAnimation[CandyColors.RED] = new ImageIcon("Textures/CandyBreaking/red.gif").getImage();
-        candyAnimation[CandyColors.ORANGE] = new ImageIcon("Textures/CandyBreaking/orange.gif").getImage();
-        candyAnimation[CandyColors.VIOLET] = new ImageIcon("Textures/CandyBreaking/purple.gif").getImage();
-        candyAnimation[CandyColors.YELLOW] = new ImageIcon("Textures/CandyBreaking/yellow.gif").getImage();
+        candyAnimation[CandyColors.BLUE] = getImageCandiesAnimation("blue.gif");
+        candyAnimation[CandyColors.GREEN] = getImageCandiesAnimation("green.gif");
+        candyAnimation[CandyColors.RED] = getImageCandiesAnimation("red.gif");
+        candyAnimation[CandyColors.ORANGE] = getImageCandiesAnimation("orange.gif");
+        candyAnimation[CandyColors.VIOLET] = getImageCandiesAnimation("purple.gif");
+        candyAnimation[CandyColors.YELLOW] = getImageCandiesAnimation("yellow.gif");
 
         explodingCandies[CandyColors.BLUE] = getImageSpecialCandies("blue.png");
         explodingCandies[CandyColors.GREEN] = getImageSpecialCandies("green.png");
@@ -58,12 +59,25 @@ public class Candies {
 
     }
 
+    // public Image getImageCandies(String fileName) {
+    // return new ImageIcon("Textures/Candies 50x50" + fileName).getImage();
+    // }
+
+    // public Image getImageCandiesAnimation(String fileName) {
+    // return new ImageIcon("Textures/CandyBreaking" + fileName).getImage();
+    // }
+
     public Image getImageCandies(String fileName) {
-        return new ImageIcon("Textures/Candies 50x50" + fileName).getImage();
+        return new ImageIcon(
+                Paths.get("Textures", "Candies 50x50", fileName).toString())
+                .getImage();
+
     }
 
     public Image getImageCandiesAnimation(String fileName) {
-        return new ImageIcon("Textures/CandyBreaking" + fileName).getImage();
+        return new ImageIcon(
+                Paths.get("Textures", "CandyBreaking", fileName).toString())
+                .getImage();
     }
 
     public Image getImageSpecialCandies(String fileName) {

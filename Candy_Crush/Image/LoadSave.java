@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class LoadSave {
-    public static final String LEVEL_BUTTONS = "Resource/UI/LevelButton.png";
+    public static final String LEVEL_BUTTONS = "Resource/UI/Easy.png";
     public static final String MENU_BUTTONS = "Resource/UI/MenuButton.png";
 
     public static BufferedImage GetSpriteAtlas(String fileName) {

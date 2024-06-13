@@ -29,7 +29,8 @@ public class MenuState extends GameState {
         this.gsm = gsm;
 
         try {
-            bg = new Background("/out/production/OOP-PROJECT/Background/BgMenu.jpeg", 0.5);
+            bg = new Background("/Resource/Background/editbg-transformed (1).png", 0.5);
+            bg.resize(550, 355);
             bg.setVector(0, 0);
             titleColor = new Color(255, 130, 171);
             titleFont = new Font("Phosphate", Font.PLAIN, 40);
@@ -45,9 +46,9 @@ public class MenuState extends GameState {
     }
 
     private void loadButtons() {
-        buttons[0] = new MenuButton(GamePanel.WIDTH / 2 - 15, 170 + 0 * 30, 0);
-        buttons[1] = new MenuButton(GamePanel.WIDTH / 2 - 15, 170 + 1 * 30, 1);
-        buttons[2] = new MenuButton(GamePanel.WIDTH / 2 - 15, 170 + 2 * 30, 2);
+        buttons[0] = new MenuButton(GamePanel.WIDTH / 2 - 10, 240 + 0 * 30, 0);
+        buttons[1] = new MenuButton(GamePanel.WIDTH / 2 - 10, 240 + 1 * 30, 1);
+        buttons[2] = new MenuButton(GamePanel.WIDTH / 2 - 10, 240 + 2 * 30, 2);
     }
 
     public void update() {

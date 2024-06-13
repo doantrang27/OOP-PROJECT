@@ -91,7 +91,7 @@ public class Level extends GameState {
         String gameDifficulty = "";
         if (currentLevel == 0) {
             gameDifficulty = "EASY";
-            gameLogic = new Logic(7, 7, 15, 5, gameDifficulty);
+            gameLogic = new Logic(7, 7, 15, 5, "EASY");
         } else if (currentLevel == 1) {
             gameDifficulty = "MEDIUM";
             gameLogic = new Logic(7, 7, 15, 5, gameDifficulty);
@@ -109,9 +109,12 @@ public class Level extends GameState {
             onLevelSelectedListener.onLevelSelected(currentLevel);
         }
         JFrame frame = new JFrame("Candy Crush");
+        frame.setSize(300, 355);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(gamePanel);
         frame.pack();
+        frame.setSize(1000, 750);
+
         frame.setVisible(true);
     }
 

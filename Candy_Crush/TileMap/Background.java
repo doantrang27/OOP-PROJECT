@@ -55,4 +55,15 @@ public class Background {
 
         }
     }
+
+    public void resize(int newWidth, int newHeight) {
+        Image tmp = image.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
+        BufferedImage resized = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_ARGB);
+
+        Graphics2D g2d = resized.createGraphics();
+        g2d.drawImage(tmp, 0, 0, null);
+        g2d.dispose();
+
+        image = resized;
+    }
 }

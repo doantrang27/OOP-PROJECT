@@ -2,11 +2,14 @@ package stage_3.src;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.List;
+
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.text.html.HTMLDocument.Iterator;
 
@@ -17,11 +20,12 @@ import stage_3.src.Level.EasyLevel;
 import stage_3.src.Level.IntermediateLevel;
 
 public class Logic {
+
     private String gameDifficulty;
 
     private final Board board;
     protected final int candies_width, candies_height;
-    protected final Candies[][] candies;
+    protected Candies[][] candies;
     private final Candies[][] Replacement_candies;
     private final Random random = new Random();
     private int ClickCounter = 0;
@@ -29,8 +33,10 @@ public class Logic {
     private final Candies switchedCandy = new Candies();
     private final Image game_background = new ImageIcon("Textures/bg-candy.jpg").getImage();
     private final Image win_gif = new ImageIcon("Textures/oie_OeMAOSwhprac.gif").getImage();
-    private final Image out_of_moves_image = new ImageIcon(/* out of move imange */).getImage();
-    private final Image next_icon_big = new ImageIcon("Textures/exit_button _large.png").getImage();
+    private final Image out_of_moves_image = new ImageIcon(/*
+                                                            * out of move imange
+                                                            */).getImage();
+    private final Image next_icon_big = new ImageIcon("Textures/exit_button_large.png").getImage();
     private int level_game_index = 0;
     private int clicked_x, clicked_y;
     private boolean isHorizontal;
@@ -49,6 +55,7 @@ public class Logic {
     private final Image Dispenser = new ImageIcon("Textures/Dispenser.png").getImage();
     private final Image obstacleImage = new ImageIcon("Textures/ice.png").getImage();
     private final Image wallImage = new ImageIcon("Textures/wall.png").getImage();
+    private final Image panelScore = new ImageIcon("Textures/bg.png").getImage();
     private List<Point> obstacles = new ArrayList<>();
     private List<Point> wallObstacles = new ArrayList<>();
     private Level level;
@@ -80,6 +87,7 @@ public class Logic {
             default:
                 throw new IllegalArgumentException("Invalid difficulty level: " + gameDifficulty);
         }
+
         candies = new Candies[candies_width][candies_height];
         Replacement_candies = new Candies[candies_width][candies_height];
         board = new Board(candies_height, candies_width, gameDifficulty);
@@ -138,6 +146,17 @@ public class Logic {
     // public String getGameDifficulty() {
     // return this.gameDifficulty;
     // }
+    public int getTargetScore() {
+        return this.targetScore;
+    }
+
+    public int getMovesCount() {
+        return this.Moves_count;
+    }
+
+    public int getScore() {
+        return this.Score;
+    }
 
     public int getCurrentLevel() {
         return Level.currentLevel;
@@ -231,16 +250,40 @@ public class Logic {
         }
     }
 
+    // obj
+
     // bg
     public void draw(Graphics g) {
+        // Graphics2D g2d = (Graphics2D) g;
+
+        // // Set the color to violet and make it semi-transparent
+        // g2d.setColor(new Color(144, 238, 144, 125)); // RGBA values for
+        // semi-transparent light green
+
+        // int rectX = 50; // x-coordinate is 0 for left side of the screen
+        // int rectY = 150; // y-coordinate is calculated to center the rectangle
+        // vertically
+        // g2d.fillRect(rectX, rectY, 200, 300);
+
+        // // Set the color to dark violet and the stroke to a thicker BasicStroke for
+        // the
+        // // border
+        // g2d.setColor(new Color(0, 10, 0)); // RGB values for dark green
+        // g2d.fillRect(rectX + 25, rectY + 25, 150, 150);
+        // Draw the rectangle
         if (level_game_index == 0) {
 
             board.draw(g);
-            g.setFont(Candy_font);
-            g.setColor(Color.RED);
-            g.drawString("Target:" + targetScore, 15, 350);
-            g.drawString("" + Moves_count, 80, 250);
-            g.drawString("Score:" + Score, 15, 450);
+            Font smallCandyFont = Candy_font.deriveFont(24f); // Change the font size to a smaller value
+
+            g.setFont(smallCandyFont);
+            // g.setFont(Candy_font)
+            g.setColor(new Color(0, 100, 0));
+            // g.setColor(Color.GREEN);
+            // g.drawString("Target:" + targetScore, 15, 350);
+            // // 462,595
+            // g.drawString("" + Moves_count, 80, 250);
+            // g.drawString("Score:" + Score, 15, 450);
 
             for (int i = 0; i < candies_width; i++) {
                 for (int j = 0; j < candies_height; j++) {
@@ -251,7 +294,6 @@ public class Logic {
                 g.drawImage(Dispenser, i * 50 + 325, 100 + 5, null);
             }
 
-            // Draw obstacles
             drawObstacles(g);
             drawWall(g);
 
@@ -831,9 +873,28 @@ public class Logic {
         }
     }
 
-    // public String setLogic() {
-    // // TODO Auto-generated method stub
-    // throw new UnsupportedOperationException("Unimplemented method 'setLogic'");
-    // }
+    public void restart() {
+        // Reset the game state to its initial state
+        // For example, if you have a score variable, reset it to 0
+        Score = 0;
+
+        // If you have a game over flag, reset it to false
+
+        // Recreate the candies matrix to reset the game board
+        for (int i = 0; i < candies_width; i++) {
+            for (int j = 0; j < candies_height; j++) {
+                candies[i][j] = new Candies();
+                candies[i][j].setPx(i * 50 + 325);
+                candies[i][j].setPy(j * 50 + 150);
+                candies[i][j].setShape(random.nextInt(AmountOfCandies));
+
+                Replacement_candies[i][j] = new Candies();
+                Replacement_candies[i][j].setPx(i * 50 + 325);
+                Replacement_candies[i][j].setPy(100);
+                Replacement_candies[i][j].setShape(random.nextInt(AmountOfCandies));
+            }
+        }
+        // And so on for all other game state variables...
+    }
 
 }
