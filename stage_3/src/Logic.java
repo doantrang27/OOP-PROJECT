@@ -47,7 +47,7 @@ public class Logic {
     private int CurrentPos;
     private boolean swapping = false;
     private boolean Non_matching_swap = false;
-    private Font Candy_font;
+    private static Font Candy_font;
     private int Score;
     private int Moves_count;
     private int game_ended_index = -5;
@@ -124,6 +124,10 @@ public class Logic {
         } while (match_checker());
         ResetCandies();
 
+    }
+
+    public static Font getCandyFont() {
+        return Candy_font;
     }
 
     IDifficultyAdjustment gameLevel;
