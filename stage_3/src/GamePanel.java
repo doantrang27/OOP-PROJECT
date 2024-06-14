@@ -41,13 +41,18 @@ public class GamePanel extends JPanel {
     private BufferedImage win;
     private BufferedImage lose;
     private BufferedImage threeStar;
+    private BufferedImage zeroStar;
+    private BufferedImage aboutButton;
+    private BufferedImage prizeButButton;
     private JButton closeButton;
     private JButton restartButton;
     private String gameDifficulty;
 
     public GamePanel(String gameDifficulty) {
         this.gameDifficulty = gameDifficulty;
+        // prize = new Prize(this, gameLogic);
         gameLogic = new Logic(7, 7, 15, 5, gameDifficulty);
+
         this.setLayout(null);
 
         // Create and add the close button
@@ -92,6 +97,11 @@ public class GamePanel extends JPanel {
             // prize
             win = ImageIO.read(new File("Textures/win.png"));
             threeStar = ImageIO.read(new File("Textures/threestar.png"));
+            lose = ImageIO.read(new File("Textures/lose.png"));
+            zeroStar = ImageIO.read(new File("Textures/zeroStar.png"));
+            // bu
+            aboutButton = ImageIO.read(new File("Textures/about.png"));
+            prizeButButton = ImageIO.read(new File("Textures/prize.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -215,17 +225,20 @@ public class GamePanel extends JPanel {
         g.drawImage(star_1, pipeLoadX + pipeLoad.getWidth() / 12 - 15,
                 pipeLoadY + pipeLoad.getHeight() / 3 - star_3.getHeight() / 4 + 5, star_3.getWidth() / 4,
                 star_1.getHeight() / 4, this);
+
         // WIN PRIZE
 
         if (playerScore >= targetScore) {
+
             g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
 
             g.drawImage(smallBoard, 350, 200,
                     smallBoard.getWidth() / 4, smallBoard.getHeight() / 4, this);
-            g.drawImage(boardInside, 375, 225,
+            g.drawImage(boardInside, 375, 223,
                     boardInside.getWidth() / 6, boardInside.getHeight() / 5, this);
             g.drawImage(win, 310, 150, win.getWidth() / 3, win.getHeight() / 3, this);
-            g.drawImage(threeStar, 398, 260, star_3.getWidth(), star_3.getHeight() / 2, this);
+            g.drawImage(threeStar, 398, 260, star_3.getWidth(), star_3.getHeight() / 2,
+                    this);
 
             Font font = Logic.getCandyFont();
             font = font.deriveFont(28f); // Change 10f to your desired font size
@@ -258,41 +271,55 @@ public class GamePanel extends JPanel {
             g.setColor(originalColor2);
             g.drawString(" " + playerScore, 425, 290 + 67);
             g.drawString(" " + targetScore, 425, 320 + 90);
-            closeButton.setBounds(480, 460, 50, 50); // replace with actual values
-            restartButton.setBounds(490, 460, 50, 50); // replace with actual values
+            g.drawImage(prizeButButton, 400, 443, prizeButButton.getWidth() / 5, prizeButButton.getHeight() / 5, this);
+            g.drawImage(aboutButton, 480, 443, aboutButton.getWidth() / 5, aboutButton.getHeight() / 5, this);
 
+        } else if (playerScore < targetScore && movesCount == 0) {
+            g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+
+            g.drawImage(smallBoard, 350, 200,
+                    smallBoard.getWidth() / 4, smallBoard.getHeight() / 4, this);
+            g.drawImage(boardInside, 375, 225,
+                    boardInside.getWidth() / 6, boardInside.getHeight() / 5, this);
+            g.drawImage(lose, 310, 150, win.getWidth() / 3, win.getHeight() / 3, this);
+            g.drawImage(zeroStar, 398, 260, star_3.getWidth(), star_3.getHeight() / 2,
+                    this);
+
+            Font font = Logic.getCandyFont();
+            font = font.deriveFont(28f); // Change 10f to your desired font size
+
+            g.setFont(font);
+
+            g.setColor(borderColor1);
+            for (int dx = -borderSize; dx <= borderSize; dx++) {
+                for (int dy = -borderSize; dy <= borderSize; dy++) {
+                    g.drawString("Your score:", 395 + dx, 330 + dy);
+                    g.drawString("Target score:", 390 + dx, 383 + dy);
+                }
+            }
+
+            // Draw the text in the original color
+            g.setColor(originalColor1);
+            g.drawString("Your score:", 395, 330);
+            g.drawString("Target score:", 390, 383);
+
+            // Draw the border for targetScore, movesCount, playerScore
+            g.setColor(borderColor2);
+            for (int dx = -borderSize; dx <= borderSize; dx++) {
+                for (int dy = -borderSize; dy <= borderSize; dy++) {
+                    g.drawString(" " + playerScore, 425 + dx, smallBoardY + 290 + 67 + dy);
+                    g.drawString(" " + targetScore, 425 + dx, smallBoardY + 320 + 90 + dy);
+                }
+            }
+
+            // Draw the output in the original color
+            g.setColor(originalColor2);
+            g.drawString(" " + playerScore, 425, 290 + 67);
+            g.drawString(" " + targetScore, 425, 320 + 90);
+            g.drawImage(prizeButButton, 400, 443, prizeButButton.getWidth() / 5, prizeButButton.getHeight() / 5, this);
+            g.drawImage(aboutButton, 480, 443, aboutButton.getWidth() / 5, aboutButton.getHeight() / 5, this);
         }
-        // if (playerScore >= targetScore) {
-        // Reset();
-        // g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
-        // // Create a semi-transparent color (e.g., semi-transparent black)
-        // Color pinkBackground = new Color(255, 105, 180, 127); // RGB for pink with
-        // half transparency
 
-        // // Set the color
-        // g.setColor(pinkBackground);
-
-        // // Draw a rectangle that covers the entire game area
-        // g.fillRect(0, 0, getWidth(), getHeight());
-
-        // // Create a centered rectangle
-        // int rectWidth = 400; // Increased size for a bigger rectangle
-        // int rectHeight = 200; // Increased size for a bigger rectangle
-        // int rectX = (getWidth() - rectWidth) / 2;
-        // int rectY = (getHeight() - rectHeight) / 2;
-        // g.setColor(Color.PINK);
-        // g.fillRect(rectX, rectY, rectWidth, rectHeight);
-
-        // // Draw "YOU WIN" text in the center of the rectangle
-        // g.setColor(Color.WHITE);
-        // g.setFont(new Font("Impact", Font.PLAIN, 50)); // Increased size for bigger
-        // text
-        // FontMetrics fm = g.getFontMetrics();
-        // int textWidth = fm.stringWidth("YOU WIN");
-        // int textX = rectX + (rectWidth - textWidth) / 2;
-        // int textY = rectY + ((rectHeight - fm.getHeight()) / 2) + fm.getAscent();
-        // g.drawString("YOU WIN", textX, textY);
-        // }
     }
 
     public void Reset() {
